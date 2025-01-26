@@ -57,6 +57,8 @@
         const location = document.getElementById('location').value;
         const comment = document.getElementById('comment').value;
 
+        console.log('Submitting comment:', date, time, location, comment);
+
         try {
             // Insert data into the Supabase database
             const { data, error } = await supabase
@@ -67,8 +69,10 @@
 
             // Check for errors
             if (error) {
+                console.error('Error inserting comment:', error.message);
                 document.getElementById('response').textContent = 'Error: ' + error.message;
             } else {
+                console.log('Comment posted successfully:', data);
                 document.getElementById('response').textContent = 'Comment posted successfully!';
                 // Optionally reset the form
                 document.getElementById('commentForm').reset();
@@ -84,6 +88,7 @@
                 document.getElementById('commentsList').prepend(commentDiv);  // Prepend to show at the top
             }
         } catch (err) {
+            console.error('Unexpected error:', err);
             document.getElementById('response').textContent = 'Error: ' + err.message;
         }
     });
