@@ -82,14 +82,21 @@
         }
     </style>
     <script type="text/javascript">
-        function postComment() {
-            // Get comment field values
-            const comment = document.getElementById("comment").value;
-            const location = document.getElementById("location").value;
-            const currentDate = new Date();
-            const dateTime = currentDate.toLocaleString();
+        // Function to load the saved comment from localStorage
+        function loadSavedComment() {
+            const savedComment = localStorage.getItem("comment");
+            const savedLocation = localStorage.getItem("location");
+            const savedDate = localStorage.getItem("dateTime");
 
-            // Display posted comment below
+            if (savedComment) {
+                document.getElementById("comment").value = savedComment;
+                document.getElementById("location").value = savedLocation;
+                displayPostedComment(savedComment, savedLocation, savedDate);
+            }
+        }
+
+        // Function to display the posted comment
+        function displayPostedComment(comment, location, dateTime) {
             const postedCommentSection = document.getElementById("posted-comment-section");
             postedCommentSection.innerHTML = `
                 <div class="posted-comment">
@@ -100,12 +107,32 @@
                     <p>${comment}</p>
                 </div>
             `;
+        }
+
+        // Function to post the comment
+        function postComment() {
+            // Get comment field values
+            const comment = document.getElementById("comment").value;
+            const location = document.getElementById("location").value;
+            const currentDate = new Date();
+            const dateTime = currentDate.toLocaleString();
+
+            // Save comment to localStorage
+            localStorage.setItem("comment", comment);
+            localStorage.setItem("location", location);
+            localStorage.setItem("dateTime", dateTime);
+
+            // Display the posted comment below
+            displayPostedComment(comment, location, dateTime);
 
             // Redirect after 5 seconds
             setTimeout(function() {
                 window.location.href = "portal.html";
             }, 5000); // 5000 milliseconds = 5 seconds
         }
+
+        // Load saved comment when the page loads
+        window.onload = loadSavedComment;
     </script>
 </head>
 <body>
