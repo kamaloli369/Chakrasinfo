@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.35.6/dist/supabase.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            width: 40%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .response {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .error {
+            color: red;
+        }
+        .success {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Login</h1>
+    <form id="loginForm">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+        
+        <button type="submit">Login</button>
+    </form>
+
+    <div id="response" class="response"></div>
+</div>
+
+<script>
+    // Initialize Supabase client with your URL and API key
+    const supabaseUrl = 'https://otctkylkupupmqwgfobk.supabase.co';  // Replace with your Supabase URL
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im90Y3RreWxrdXB1cG1xd2dmb2JrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc4NzkyMTUsImV4cCI6MjA1MzQ1NTIxNX0.pN4e4WMuRwm7vOrI47OuJAQiSQNqR9LLDif87AcuuUA;  // Replace with your Supabase API key
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+    // Handle form submission
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();  // Prevent default form submission
+
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        try {
+            // Attempt to sign in with email and password
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email,
+                password
+            });
+
+            if (error) {
+                // Display error message
+                document.getElementById('response').innerHTML = `<span class="error">${error.message}</span>`;
+            } else {
+                // Successful login
+                document.getElementById('response').innerHTML = `<span class="success">Login successful! Welcome ${data.user.email}</span>`;
+            }
+        } catch (err) {
+            console.error('Error:', err);
+            document.getElementById('response').innerHTML = `<span class="error">Unexpected error occurred: ${err.message}</span>`;
+        }
+    });
+</script>
+
+</body>
+</html>
