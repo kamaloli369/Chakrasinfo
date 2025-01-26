@@ -3,155 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Post Your Comment</title>
+    <title>Post Comment</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.35.6/dist/supabase.min.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
-            color: #333;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            background-color: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 60%;
-            max-width: 600px;
-        }
-        h1 {
-            color: #0073e6;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        label {
-            font-weight: bold;
-            margin-top: 10px;
-            display: block;
-        }
-        input[type="text"], textarea {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-        button {
-            background-color: #0073e6;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 20px;
-        }
-        button:hover {
-            background-color: #005bb5;
-        }
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            font-size: 12px;
-            color: #777;
-        }
-        .footer a {
-            color: #0073e6;
-            text-decoration: none;
-        }
-        .posted-comment {
-            background-color: #f9f9f9;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .posted-comment h3 {
-            margin-top: 0;
-        }
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
+        .container { width: 60%; margin: 0 auto; background-color: #fff; padding: 20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+        h1 { text-align: center; }
+        input, textarea { width: 100%; padding: 10px; margin: 10px 0; font-size: 16px; }
+        button { padding: 10px; background-color: #4CAF50; color: white; border: none; width: 100%; cursor: pointer; }
+        button:hover { background-color: #45a049; }
     </style>
-    <script type="text/javascript">
-        // Function to load the saved comment from localStorage
-        function loadSavedComment() {
-            const savedComment = localStorage.getItem("comment");
-            const savedLocation = localStorage.getItem("location");
-            const savedDate = localStorage.getItem("dateTime");
-
-            if (savedComment) {
-                document.getElementById("comment").value = savedComment;
-                document.getElementById("location").value = savedLocation;
-                displayPostedComment(savedComment, savedLocation, savedDate);
-            }
-        }
-
-        // Function to display the posted comment
-        function displayPostedComment(comment, location, dateTime) {
-            const postedCommentSection = document.getElementById("posted-comment-section");
-            postedCommentSection.innerHTML = `
-                <div class="posted-comment">
-                    <h3>Posted Comment:</h3>
-                    <p><strong>Date/Time:</strong> ${dateTime}</p>
-                    <p><strong>Location:</strong> ${location}</p>
-                    <p><strong>Comment:</strong></p>
-                    <p>${comment}</p>
-                </div>
-            `;
-        }
-
-        // Function to post the comment
-        function postComment() {
-            // Get comment field values
-            const comment = document.getElementById("comment").value;
-            const location = document.getElementById("location").value;
-            const currentDate = new Date();
-            const dateTime = currentDate.toLocaleString();
-
-            // Save comment to localStorage
-            localStorage.setItem("comment", comment);
-            localStorage.setItem("location", location);
-            localStorage.setItem("dateTime", dateTime);
-
-            // Display the posted comment below
-            displayPostedComment(comment, location, dateTime);
-
-            // Redirect after 5 seconds
-            setTimeout(function() {
-                window.location.href = "portal.html";
-            }, 5000); // 5000 milliseconds = 5 seconds
-        }
-
-        // Load saved comment when the page loads
-        window.onload = loadSavedComment;
-    </script>
 </head>
 <body>
-    <div class="container">
-        <h1>Post Your Comment</h1>
+
+<div class="container">
+    <h1>Post a Comment</h1>
+    <form id="commentForm">
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required><br><br>
         
-        <label for="comment">Comment</label>
-        <textarea id="comment" placeholder="Write your comment here..."></textarea>
+        <label for="time">Time:</label>
+        <input type="time" id="time" name="time" required><br><br>
         
-        <label for="location">Location</label>
-        <input type="text" id="location" placeholder="Enter your location">
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location"><br><br>
         
-        <button onclick="postComment()">Post Comment</button>
+        <label for="comment">Comment:</label>
+        <textarea id="comment" name="comment" rows="4" required></textarea><br><br>
         
-        <div id="posted-comment-section"></div>
-        
-        <div class="footer">
-            <p>After posting, you will be redirected in 5 seconds.</p>
-        </div>
-    </div>
+        <button type="submit">Submit Comment</button>
+    </form>
+    <div id="response"></div>
+</div>
+
+<script>
+    // Initialize the Supabase client
+    const supabase = supabase.createClient('https://your-project-ref.supabase.co', 'your-anon-key'); // Replace with your Supabase URL and Anon Key
+
+    // Handle the form submission
+    document.getElementById('commentForm').addEventListener('submit', async (e) => {
+        e.preventDefault(); // Prevent the form from submitting the traditional way
+
+        const date = document.getElementById('date').value;
+        const time = document.getElementById('time').value;
+        const location = document.getElementById('location').value;
+        const comment = document.getElementById('comment').value;
+
+        // Insert the comment into the Supabase database
+        const { data, error } = await supabase
+            .from('comments')
+            .insert([
+                { date, time, location, comment }
+            ]);
+
+        if (error) {
+            document.getElementById('response').textContent = 'Error: ' + error.message;
+        } else {
+            document.getElementById('response').textContent = 'Comment posted successfully!';
+            // Optionally reset the form
+            document.getElementById('commentForm').reset();
+        }
+    });
+</script>
+
 </body>
 </html>
