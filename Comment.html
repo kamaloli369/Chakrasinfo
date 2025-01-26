@@ -12,6 +12,7 @@
         input, textarea { width: 100%; padding: 10px; margin: 10px 0; font-size: 16px; }
         button { padding: 10px; background-color: #4CAF50; color: white; border: none; width: 100%; cursor: pointer; }
         button:hover { background-color: #45a049; }
+        .comment { margin-top: 20px; padding: 10px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 5px; }
     </style>
 </head>
 <body>
@@ -34,37 +35,56 @@
         <button type="submit">Submit Comment</button>
     </form>
     <div id="response"></div>
+
+    <div id="commentsList">
+        <!-- Posted comments will appear here -->
+    </div>
 </div>
 
 <script>
-    // Initialize the Supabase client
-    const supabaseUrl = 'https://otctkylkupupmqwgfobk.supabase.co'  // Replace with your Supabase URL
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im90Y3RreWxrdXB1cG1xd2dmb2JrIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczNzg3OTIxNSwiZXhwIjoyMDUzNDU1MjE1fQ.bVd7dY6zbUFDQRNe2Dau4yvP8tDZimijuU8avLpOpTs'  // Replace with your Supabase API key
-    const supabase = supabase.createClient(supabaseUrl, supabaseKey)
+    // Initialize Supabase client with your URL and API key
+    const supabaseUrl = 'https://otctkylkupupmqwgfobk.supabase.co';  // Replace with your Supabase URL
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im90Y3RreWxrdXB1cG1xd2dmb2JrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc4NzkyMTUsImV4cCI6MjA1MzQ1NTIxNX0.pN4e4WMuRwm7vOrI47OuJAQiSQNqR9LLDif87AcuuUA';  // Replace with your Supabase API key
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
     // Handle form submission
     document.getElementById('commentForm').addEventListener('submit', async (e) => {
-        e.preventDefault();  // Prevent default form submission behavior
+        e.preventDefault();  // Prevent the default form submission
 
+        // Get form values
         const date = document.getElementById('date').value;
         const time = document.getElementById('time').value;
         const location = document.getElementById('location').value;
         const comment = document.getElementById('comment').value;
 
-        // Insert data into the Supabase table
-        const { data, error } = await supabase
-            .from('comments')
-            .insert([
-                { date, time, location, comment }
-            ]);
+        try {
+            // Insert data into the Supabase database
+            const { data, error } = await supabase
+                .from('comments')
+                .insert([
+                    { date, time, location, comment }
+                ]);
 
-        // Check for error or success
-        if (error) {
-            document.getElementById('response').textContent = 'Error: ' + error.message;
-        } else {
-            document.getElementById('response').textContent = 'Comment posted successfully!';
-            // Optionally reset the form
-            document.getElementById('commentForm').reset();
+            // Check for errors
+            if (error) {
+                document.getElementById('response').textContent = 'Error: ' + error.message;
+            } else {
+                document.getElementById('response').textContent = 'Comment posted successfully!';
+                // Optionally reset the form
+                document.getElementById('commentForm').reset();
+
+                // Display the new comment below the form
+                const commentDiv = document.createElement('div');
+                commentDiv.classList.add('comment');
+                commentDiv.innerHTML = `
+                    <strong>${date} ${time}</strong><br>
+                    <em>Location: ${location}</em><br>
+                    <p>${comment}</p>
+                `;
+                document.getElementById('commentsList').prepend(commentDiv);  // Prepend to show at the top
+            }
+        } catch (err) {
+            document.getElementById('response').textContent = 'Error: ' + err.message;
         }
     });
 </script>
