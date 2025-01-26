@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Access</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #fff;
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        p {
+            font-size: 1rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .hint {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 10px;
+        }
+
+        input[type="password"] {
+            padding: 15px;
+            font-size: 16px;
+            width: 300px;
+            margin: 20px auto;
+            border: none;
+            border-radius: 30px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        input[type="password"]:focus {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .error-message {
+            color: #ff6b6b;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .custom-button {
+            display: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            background: linear-gradient(90deg, #ff8a00, #e52e71);
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            text-decoration: none;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .custom-button:hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            transform: translateY(-3px);
+        }
+
+        footer {
+            margin-top: 40px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <h1>Secure Access Portal</h1>
+    <p>Enter your password to unlock access to the resource.</p>
+
+    <input type="password" id="password" placeholder="Enter password" oninput="validatePassword()" />
+    <p class="hint">Hint: It's about your "First Love"</p>
+    <p class="error-message" id="errorMessage">Incorrect password</p>
+
+    <a href="https://drive.google.com/drive/folders/1-0n-Z9u0gfVZLVzWK-4cSrF_t4P91dG2" 
+       class="custom-button" id="submitButton" target="_blank">Access Drive</a>
+
+    <footer>&copy; 2025 Secure Portal. All rights reserved.</footer>
+
+    <script>
+        function validatePassword() {
+            const passwordField = document.getElementById("password");
+            const submitButton = document.getElementById("submitButton");
+            const errorMessage = document.getElementById("errorMessage");
+
+            // The correct password
+            const correctPassword = "my first love juna";
+
+            // Check if the entered password matches the correct password
+            if (passwordField.value === correctPassword) {
+                submitButton.style.display = "inline-block"; // Show the button
+                errorMessage.style.display = "none"; // Hide the error message
+            } else {
+                submitButton.style.display = "none"; // Hide the button
+                if (passwordField.value.trim() !== "") {
+                    errorMessage.style.display = "block"; // Show the error message
+                } else {
+                    errorMessage.style.display = "none"; // Hide the error message
+                }
+            }
+        }
+    </script>
+</body>
+</html>
