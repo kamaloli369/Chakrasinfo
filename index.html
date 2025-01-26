@@ -22,3 +22,48 @@
   <iframe src="https://www.chakras.info/" title="Chakras Info Website"></iframe>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Button with Link</title>
+  <style>
+    html {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+
+    .custom-button {
+      display: inline-block; /* Makes the link look like a button */
+      text-decoration: none; /* Removes underline */
+      background-color: #007bff; /* Button color */
+      color: white; /* Text color */
+      padding: 12px 24px; /* Padding inside button */
+      font-size: 16px; /* Text size */
+      font-weight: bold; /* Bold text */
+      border-radius: 8px; /* Rounded corners */
+      cursor: pointer; /* Pointer cursor */
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Button shadow */
+      transition: all 0.3s ease; /* Smooth hover animation */
+    }
+
+    .custom-button:hover {
+      background-color: #0056b3; /* Darker blue on hover */
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3); /* Larger shadow on hover */
+    }
+
+    .custom-button:active {
+      background-color: #003d80; /* Even darker blue when clicked */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Reduced shadow when clicked */
+      transform: translateY(2px); /* Button press effect */
+    }
+  </style>
+</head>
+<a href="https://www.example.com" class="custom-button" target="_blank">Visit Example</a>
+</html>
