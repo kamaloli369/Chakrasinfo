@@ -38,24 +38,27 @@
 
 <script>
     // Initialize the Supabase client
-    const supabase = supabase.createClient('https://otctkylkupupmqwgfobk.supabase.co, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im90Y3RreWxrdXB1cG1xd2dmb2JrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc4NzkyMTUsImV4cCI6MjA1MzQ1NTIxNX0.pN4e4WMuRwm7vOrI47OuJAQiSQNqR9LLDif87AcuuUA'); // Replace with your Supabase URL and Anon Key
+    const supabaseUrl = 'https://otctkylkupupmqwgfobk.supabase.co'  // Replace with your Supabase URL
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im90Y3RreWxrdXB1cG1xd2dmb2JrIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczNzg3OTIxNSwiZXhwIjoyMDUzNDU1MjE1fQ.bVd7dY6zbUFDQRNe2Dau4yvP8tDZimijuU8avLpOpTs'  // Replace with your Supabase API key
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey)
 
-    // Handle the form submission
+    // Handle form submission
     document.getElementById('commentForm').addEventListener('submit', async (e) => {
-        e.preventDefault(); // Prevent the form from submitting the traditional way
+        e.preventDefault();  // Prevent default form submission behavior
 
         const date = document.getElementById('date').value;
         const time = document.getElementById('time').value;
         const location = document.getElementById('location').value;
         const comment = document.getElementById('comment').value;
 
-        // Insert the comment into the Supabase database
+        // Insert data into the Supabase table
         const { data, error } = await supabase
             .from('comments')
             .insert([
                 { date, time, location, comment }
             ]);
 
+        // Check for error or success
         if (error) {
             document.getElementById('response').textContent = 'Error: ' + error.message;
         } else {
