@@ -24,9 +24,10 @@
         .cover-photo {
             width: 100%;
             height: 150px;
-            background-image: url('cover.jpg');
+            background-image: url('https://via.placeholder.com/600x150');
             background-size: cover;
             background-position: center;
+            cursor: pointer;
         }
 
         .profile-picture {
@@ -37,6 +38,7 @@
             margin: -50px auto 20px;
             overflow: hidden;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
         }
 
         .profile-picture img {
@@ -61,14 +63,50 @@
             font-size: 16px;
             color: #777;
         }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            padding-top: 60px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #bbb;
+        }
     </style>
 </head>
 <body>
 
     <div class="dashboard">
-        <div class="cover-photo"></div>
-        <div class="profile-picture">
-            <img src="profile.jpg" alt="Profile Picture">
+        <div class="cover-photo" onclick="openFullImage('https://via.placeholder.com/600x150')"></div>
+        <div class="profile-picture" onclick="openFullImage('https://via.placeholder.com/100')">
+            <img src="https://via.placeholder.com/100" alt="Profile Picture">
         </div>
         <div class="user-details">
             <h2>Juna</h2>
@@ -76,5 +114,27 @@
         </div>
     </div>
 
+    <!-- Modal for Full Image -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="fullImage">
+    </div>
+
+    <script>
+        // Function to open the image in full size
+        function openFullImage(imageUrl) {
+            const modal = document.getElementById('imageModal');
+            const fullImage = document.getElementById('fullImage');
+            fullImage.src = imageUrl;
+            modal.style.display = "block";
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = "none";
+        }
+    </script>
+
 </body>
-</html>
+    </html>
