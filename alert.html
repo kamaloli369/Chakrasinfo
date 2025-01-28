@@ -54,7 +54,7 @@
     <input type="password" id="password" placeholder="Enter password" />
     <p class="error-message" id="errorMessage">Incorrect password</p>
 
-    <button class="custom-button" id="accessButton">Access Resource</button>
+    <button class="custom-button" id="accessButton" onclick="accessDrive()">Access Resource</button>
 
     <footer>&copy; 2025 Secure Portal. All rights reserved.</footer>
 
@@ -97,12 +97,11 @@
             }
         }
 
-        function openDriveLink() {
-            window.location.href = "https://drive.google.com/drive/folders/1-0n-Z9u0gfVZLVzWK-4cSrF_t4P91dG2";
+        function accessDrive() {
+            window.open("https://drive.google.com/drive/folders/1-0n-Z9u0gfVZLVzWK-4cSrF_t4P91dG2", "_blank");
         }
 
         document.getElementById("password").addEventListener("input", validatePassword);
-        document.getElementById("accessButton").addEventListener("click", openDriveLink);
     </script>
 </body>
-  </html>
+</html>
