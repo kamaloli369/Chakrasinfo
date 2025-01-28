@@ -59,49 +59,51 @@
     <footer>&copy; 2025 Secure Portal. All rights reserved.</footer>
 
     <script>
-        function getTimeBasedPassword() {
-            const now = new Date();
+        document.addEventListener('DOMContentLoaded', function () {
+            function getTimeBasedPassword() {
+                const now = new Date();
 
-            const kathmanduOffset = 5.75 * 60 * 60 * 1000;
-            const utcTime = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
-            const kathmanduTime = new Date(utcTime + kathmanduOffset);
+                const kathmanduOffset = 5.75 * 60 * 60 * 1000;
+                const utcTime = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
+                const kathmanduTime = new Date(utcTime + kathmanduOffset);
 
-            let hours = kathmanduTime.getHours();
-            const minutes = kathmanduTime.getMinutes();
-            const day = kathmanduTime.getDate();
+                let hours = kathmanduTime.getHours();
+                const minutes = kathmanduTime.getMinutes();
+                const day = kathmanduTime.getDate();
 
-            const period = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12 || 12;
+                const period = hours >= 12 ? 'PM' : 'AM';
+                hours = hours % 12 || 12;
 
-            const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-            return `${hours}${formattedMinutes}${day}${period}`;
-        }
+                const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+                return `${hours}${formattedMinutes}${day}${period}`;
+            }
 
-        function validatePassword() {
-            const passwordField = document.getElementById("password");
-            const accessButton = document.getElementById("accessButton");
-            const errorMessage = document.getElementById("errorMessage");
+            function validatePassword() {
+                const passwordField = document.getElementById("password");
+                const accessButton = document.getElementById("accessButton");
+                const errorMessage = document.getElementById("errorMessage");
 
-            const currentPassword = getTimeBasedPassword();
+                const currentPassword = getTimeBasedPassword();
 
-            if (passwordField.value === currentPassword) {
-                accessButton.style.display = "inline-block";
-                errorMessage.style.display = "none";
-            } else {
-                accessButton.style.display = "none";
-                if (passwordField.value.trim() !== "") {
-                    errorMessage.style.display = "block";
-                } else {
+                if (passwordField.value === currentPassword) {
+                    accessButton.style.display = "inline-block";
                     errorMessage.style.display = "none";
+                } else {
+                    accessButton.style.display = "none";
+                    if (passwordField.value.trim() !== "") {
+                        errorMessage.style.display = "block";
+                    } else {
+                        errorMessage.style.display = "none";
+                    }
                 }
             }
-        }
 
-        function accessDrive() {
-            window.open("https://drive.google.com/drive/folders/1-0n-Z9u0gfVZLVzWK-4cSrF_t4P91dG2", "_blank");
-        }
+            function accessDrive() {
+                window.open("https://drive.google.com/drive/folders/1-0n-Z9u0gfVZLVzWK-4cSrF_t4P91dG2", "_blank");
+            }
 
-        document.getElementById("password").addEventListener("input", validatePassword);
+            document.getElementById("password").addEventListener("input", validatePassword);
+        });
     </script>
 </body>
 </html>
