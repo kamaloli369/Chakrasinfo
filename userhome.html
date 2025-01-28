@@ -19,12 +19,59 @@
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        /* Menu Button */
+        .menu-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 24px;
+            color: #333;
+        }
+
+        /* Dropdown Menu */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 40px;
+            right: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            width: 200px;
+        }
+
+        .dropdown-menu ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .dropdown-menu ul li {
+            padding: 10px 20px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .dropdown-menu ul li:hover {
+            background-color: #f4f4f4;
+        }
+
+        .dropdown-menu ul li a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
 
         .cover-photo {
             width: 100%;
             height: 150px;
-            background-image: url('cover.jpg');
+            background-image: url('cover.jpg'); /* Replace with your cover photo */
             background-size: cover;
             background-position: center;
             cursor: pointer;
@@ -69,34 +116,59 @@
             display: none;
             position: fixed;
             z-index: 1000;
-            padding-top: 60px;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0, 0, 0, 0.9);
+            background-color: rgba(0, 0, 0, 0.5);
         }
 
         .modal-content {
-            margin: auto;
-            display: block;
-            max-width: 90%;
-            max-height: 90%;
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        .close {
-            position: absolute;
-            top: 20px;
-            right: 35px;
-            color: #fff;
-            font-size: 40px;
+        .modal-content h3 {
+            margin-top: 0;
+            font-size: 20px;
+            color: #333;
+        }
+
+        .modal-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .modal-content ul li {
+            padding: 10px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .modal-content ul li:hover {
+            background-color: #f4f4f4;
+        }
+
+        .modal-content ul li a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .close-modal {
+            float: right;
+            font-size: 24px;
             font-weight: bold;
-            transition: 0.3s;
             cursor: pointer;
         }
 
-        .close:hover {
+        .close-modal:hover {
             color: #bbb;
         }
     </style>
@@ -104,9 +176,22 @@
 <body>
 
     <div class="dashboard">
+        <!-- Menu Button -->
+        <div class="menu-btn" onclick="toggleMenu()">&#9776;</div>
+
+        <!-- Dropdown Menu -->
+        <div class="dropdown-menu" id="dropdownMenu">
+            <ul>
+                <li onclick="alert('Details clicked')">Details</li>
+                <li onclick="alert('Dashboard clicked')">Dashboard</li>
+                <li onclick="alert('Language clicked')">Language</li>
+                <li onclick="openSettingsModal()">Settings</li>
+            </ul>
+        </div>
+
         <div class="cover-photo" onclick="openFullImage('cover.jpg')"></div>
         <div class="profile-picture" onclick="openFullImage('profile.jpg')">
-            <img src="profile.jpg" alt="Profile Picture">
+            <img src="profile.jpg" alt="Profile Picture"> <!-- Replace with your profile photo -->
         </div>
         <div class="user-details">
             <h2>Juna</h2>
@@ -118,6 +203,22 @@
     <div id="imageModal" class="modal">
         <span class="close" onclick="closeModal()">&times;</span>
         <img class="modal-content" id="fullImage">
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeSettingsModal()">&times;</span>
+            <h3>Settings</h3>
+            <ul>
+                <li><a href="#" onclick="changeProfilePicture()">Change Profile Picture</a></li>
+                <li><a href="#" onclick="changeCoverPhoto()">Change Cover Photo</a></li>
+                <li><a href="#" onclick="updatePassword()">Update Password</a></li>
+                <li><a href="#" onclick="privacySettings()">Privacy Settings</a></li>
+                <li><a href="#" onclick="notificationSettings()">Notification Settings</a></li>
+                <li><a href="alert.html" onclick="redirectToAlert()">Secret</a></li>
+            </ul>
+        </div>
     </div>
 
     <script>
@@ -133,6 +234,71 @@
         function closeModal() {
             const modal = document.getElementById('imageModal');
             modal.style.display = "none";
+        }
+
+        // Function to toggle the dropdown menu
+        function toggleMenu() {
+            const dropdownMenu = document.getElementById('dropdownMenu');
+            if (dropdownMenu.style.display === "block") {
+                dropdownMenu.style.display = "none";
+            } else {
+                dropdownMenu.style.display = "block";
+            }
+        }
+
+        // Function to open the settings modal
+        function openSettingsModal() {
+            const settingsModal = document.getElementById('settingsModal');
+            settingsModal.style.display = "block";
+        }
+
+        // Function to close the settings modal
+        function closeSettingsModal() {
+            const settingsModal = document.getElementById('settingsModal');
+            settingsModal.style.display = "none";
+        }
+
+        // Close the dropdown menu if clicked outside
+        window.onclick = function(event) {
+            const dropdownMenu = document.getElementById('dropdownMenu');
+            const settingsModal = document.getElementById('settingsModal');
+            if (event.target === settingsModal) {
+                settingsModal.style.display = "none";
+            }
+            if (event.target !== dropdownMenu && !event.target.matches('.menu-btn')) {
+                dropdownMenu.style.display = "none";
+            }
+        }
+
+        // Settings Functions
+        function changeProfilePicture() {
+            alert("Change Profile Picture clicked");
+            // Add logic to upload/change profile picture
+        }
+
+        function changeCoverPhoto() {
+            alert("Change Cover Photo clicked");
+            // Add logic to upload/change cover photo
+        }
+
+        function updatePassword() {
+            alert("Update Password clicked");
+            // Add logic to update password
+        }
+
+        function privacySettings() {
+            alert("Privacy Settings clicked");
+            // Add logic for privacy settings
+        }
+
+        function notificationSettings() {
+            alert("Notification Settings clicked");
+            // Add logic for notification settings
+        }
+
+        // Redirect to alert.html
+        function redirectToAlert() {
+            window.location.href = "alert.html";
         }
     </script>
 
