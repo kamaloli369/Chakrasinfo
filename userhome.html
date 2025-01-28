@@ -121,10 +121,45 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.9);
         }
 
         .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #bbb;
+        }
+
+        /* Settings Modal Styles */
+        .settings-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .settings-modal-content {
             background-color: #fff;
             margin: 10% auto;
             padding: 20px;
@@ -133,42 +168,42 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        .modal-content h3 {
+        .settings-modal-content h3 {
             margin-top: 0;
             font-size: 20px;
             color: #333;
         }
 
-        .modal-content ul {
+        .settings-modal-content ul {
             list-style: none;
             padding: 0;
             margin: 0;
         }
 
-        .modal-content ul li {
+        .settings-modal-content ul li {
             padding: 10px;
             cursor: pointer;
             color: #333;
         }
 
-        .modal-content ul li:hover {
+        .settings-modal-content ul li:hover {
             background-color: #f4f4f4;
         }
 
-        .modal-content ul li a {
+        .settings-modal-content ul li a {
             text-decoration: none;
             color: inherit;
             display: block;
         }
 
-        .close-modal {
+        .close-settings-modal {
             float: right;
             font-size: 24px;
             font-weight: bold;
             cursor: pointer;
         }
 
-        .close-modal:hover {
+        .close-settings-modal:hover {
             color: #bbb;
         }
     </style>
@@ -199,16 +234,16 @@
         </div>
     </div>
 
-    <!-- Modal for Full Image -->
+    <!-- Full-Screen Image Modal -->
     <div id="imageModal" class="modal">
         <span class="close" onclick="closeModal()">&times;</span>
         <img class="modal-content" id="fullImage">
     </div>
 
     <!-- Settings Modal -->
-    <div id="settingsModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeSettingsModal()">&times;</span>
+    <div id="settingsModal" class="settings-modal">
+        <div class="settings-modal-content">
+            <span class="close-settings-modal" onclick="closeSettingsModal()">&times;</span>
             <h3>Settings</h3>
             <ul>
                 <li><a href="#" onclick="changeProfilePicture()">Change Profile Picture</a></li>
@@ -230,7 +265,7 @@
             modal.style.display = "block";
         }
 
-        // Function to close the modal
+        // Function to close the full-screen image modal
         function closeModal() {
             const modal = document.getElementById('imageModal');
             modal.style.display = "none";
@@ -262,8 +297,12 @@
         window.onclick = function(event) {
             const dropdownMenu = document.getElementById('dropdownMenu');
             const settingsModal = document.getElementById('settingsModal');
+            const imageModal = document.getElementById('imageModal');
             if (event.target === settingsModal) {
                 settingsModal.style.display = "none";
+            }
+            if (event.target === imageModal) {
+                imageModal.style.display = "none";
             }
             if (event.target !== dropdownMenu && !event.target.matches('.menu-btn')) {
                 dropdownMenu.style.display = "none";
