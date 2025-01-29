@@ -3,106 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Access</title>
+    <title>Secure Portal</title>
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
-            background: #f0f4f8;
-            color: #333;
-            text-align: center;
-            padding: 50px;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
-        h1 {
-            font-size: 2.5rem;
-            color: #1a73e8;
-            margin-bottom: 20px;
-        }
-        input[type="password"] {
-            padding: 10px;
-            font-size: 16px;
+
+        .login-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 300px;
-            margin: 20px auto;
-            border: 1px solid #1a73e8;
-            border-radius: 5px;
-            outline: none;
             text-align: center;
         }
-        .custom-button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background: #1a73e8;
-            color: #fff;
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
-            display: none;
         }
-        .custom-button:hover {
-            background: #0057d9;
+
+        button:hover {
+            background-color: #218838;
         }
+
         .error-message {
-            color: #d93025;
-            font-size: 14px;
+            color: red;
+            margin-top: 10px;
+        }
+
+        .hidden {
             display: none;
         }
     </style>
 </head>
 <body>
-    <h1>Secure Portal</h1>
-    <p>Enter the required password to gain access.</p>
-
-    <input type="password" id="password" placeholder="Enter password" />
-    <p class="error-message" id="errorMessage">Incorrect password</p>
-
-    <button class="custom-button" id="accessButton" onclick="accessDrive()">Access Resource</button>
-
-    <footer>&copy; 2025 Secure Portal. All rights reserved.</footer>
+    <div class="login-container">
+        <h2>Secure Portal</h2>
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <p id="error-message" class="error-message"></p>
+    </div>
+    <div id="driveLink" class="hidden">
+        <a href="https://drive.google.com/drive/folders/1-0n-Z9u0gfVZLVzWK-4cSrF_t4P91dG2" target="_blank">Access Your Drive</a>
+    </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            function getTimeBasedPassword() {
-                const now = new Date();
+        function generateCustomPassword() {
+            const now = new Date();
+            const day = now.getDate().toString();
+            return `my first love juna ${day}`;
+        }
 
-                const kathmanduOffset = 5.75 * 60 * 60 * 1000;
-                const utcTime = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
-                const kathmanduTime = new Date(utcTime + kathmanduOffset);
+        function validateCredentials(username, password) {
+            const correctUsername = 'juna';
+            const currentPassword = generateCustomPassword();
+            return username === correctUsername && password === currentPassword;
+        }
 
-                let hours = kathmanduTime.getHours();
-                const minutes = kathmanduTime.getMinutes();
-                const day = kathmanduTime.getDate();
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
 
-                const period = hours >= 12 ? 'PM' : 'AM';
-                hours = hours % 12 || 12;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
 
-                const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-                return `${hours}${formattedMinutes}${day}${period}`;
+            if (validateCredentials(username, password)) {
+                document.getElementById('loginForm').classList.add('hidden');
+                document.getElementById('driveLink').classList.remove('hidden');
+                document.getElementById('error-message').textContent = '';
+            } else {
+                document.getElementById('error-message').textContent = 'Invalid username or password';
             }
-
-            function validatePassword() {
-                const passwordField = document.getElementById("password");
-                const accessButton = document.getElementById("accessButton");
-                const errorMessage = document.getElementById("errorMessage");
-
-                const currentPassword = getTimeBasedPassword();
-
-                if (passwordField.value === currentPassword) {
-                    accessButton.style.display = "inline-block";
-                    errorMessage.style.display = "none";
-                } else {
-                    accessButton.style.display = "none";
-                    if (passwordField.value.trim() !== "") {
-                        errorMessage.style.display = "block";
-                    } else {
-                        errorMessage.style.display = "none";
-                    }
-                }
-            }
-
-            function accessDrive() {
-                window.open("https://drive.google.com/drive/folders/1-0n-Z9u0gfVZLVzWK-4cSrF_t4P91dG2", "_blank");
-            }
-
-            document.getElementById("password").addEventListener("input", validatePassword);
         });
     </script>
 </body>
