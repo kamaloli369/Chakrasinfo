@@ -7,58 +7,94 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background: linear-gradient(135deg, #28a745, #218838);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            color: #fff;
         }
 
-        .login-container {
+        .container {
             background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 350px;
             text-align: center;
+            color: #333;
+        }
+
+        h2 {
+            margin-bottom: 20px;
         }
 
         .input-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             text-align: left;
         }
 
         .input-group label {
             display: block;
             margin-bottom: 5px;
+            font-weight: bold;
         }
 
         .input-group input {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             box-sizing: border-box;
             border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 6px;
+            font-size: 16px;
         }
 
         button {
             width: 100%;
-            padding: 10px;
-            background-color: #28a745;
+            padding: 12px;
+            font-size: 16px;
+            background: linear-gradient(135deg, #28a745, #218838);
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
+            transition: background 0.3s ease;
         }
 
         button:hover {
-            background-color: #218838;
+            background: linear-gradient(135deg, #218838, #28a745);
         }
 
         .error-message {
             color: red;
-            margin-top: 10px;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .access-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 16px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .access-link:hover {
+            background: linear-gradient(135deg, #0056b3, #007bff);
+        }
+
+        #copyButton {
+            margin-top: 15px;
+            background: linear-gradient(135deg, #ffc107, #e0a800);
+        }
+
+        #copyButton:hover {
+            background: linear-gradient(135deg, #e0a800, #ffc107);
         }
 
         .hidden {
@@ -67,7 +103,7 @@
     </style>
 </head>
 <body>
-    <div class="login-container">
+    <div class="container" id="loginContainer">
         <h2>Secure Portal</h2>
         <form id="loginForm">
             <div class="input-group">
@@ -82,8 +118,11 @@
         </form>
         <p id="error-message" class="error-message"></p>
     </div>
-    <div id="driveLink" class="hidden">
-        <a href="https://drive.google.com/drive/folders/1-0n-Z9u0gfVZLVzWK-4cSrF_t4P91dG2" target="_blank">Access Your Drive</a>
+
+    <div class="container hidden" id="driveContainer">
+        <h2>Welcome to Your Drive</h2>
+        <a id="link" href="https://drive.google.com/drive/folders/1-0n-Z9u0gfVZLVzWK-4cSrF_t4P91dG2" target="_blank" class="access-link">Access Drive</a>
+        <button id="copyButton">Copy Link</button>
     </div>
 
     <script>
@@ -106,12 +145,19 @@
             const password = document.getElementById('password').value;
 
             if (validateCredentials(username, password)) {
-                document.getElementById('loginForm').classList.add('hidden');
-                document.getElementById('driveLink').classList.remove('hidden');
+                document.getElementById('loginContainer').classList.add('hidden');
+                document.getElementById('driveContainer').classList.remove('hidden');
                 document.getElementById('error-message').textContent = '';
             } else {
                 document.getElementById('error-message').textContent = 'Invalid username or password';
             }
+        });
+
+        document.getElementById('copyButton').addEventListener('click', function() {
+            const link = document.getElementById('link').href;
+            navigator.clipboard.writeText(link)
+                .then(() => alert('Link copied to clipboard!'))
+                .catch(() => alert('Failed to copy the link.'));
         });
     </script>
 </body>
