@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Info</title>
+    <title>Kamal's Portfolio</title>
     <style>
         /* General Styles */
         body {
@@ -13,6 +13,7 @@
             box-sizing: border-box;
             background-color: #f9f9f9;
             color: #333;
+            line-height: 1.6;
         }
 
         header {
@@ -35,6 +36,7 @@
             margin-top: 1em;
             display: flex;
             justify-content: center;
+            align-items: center;
         }
 
         header nav ul {
@@ -52,6 +54,14 @@
             padding: 0.5em 1em;
             border-radius: 5px;
             transition: background 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+        }
+
+        header nav ul li a img {
+            width: 20px;
+            height: 20px;
         }
 
         header nav ul li a:hover {
@@ -90,7 +100,7 @@
 
         /* Section Styles */
         .section {
-            padding: 3em 1.5em;
+            padding: 4em 1.5em;
             text-align: center;
         }
 
@@ -103,7 +113,7 @@
         }
 
         .section h2 {
-            font-size: 2em;
+            font-size: 2.5em;
             margin-bottom: 1em;
             color: #4b6cb7;
         }
@@ -112,15 +122,61 @@
             font-size: 1.2em;
             max-width: 800px;
             margin: 0 auto;
-            line-height: 1.6;
         }
 
-        /* Contact Form */
+        /* About Section */
+        #about img {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 50%;
+            margin-top: 2em;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Portfolio Section */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5em;
+            margin-top: 2em;
+        }
+
+        .portfolio-item {
+            background: white;
+            padding: 1.5em;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .portfolio-item h3 {
+            margin: 1em 0 0.5em;
+            font-size: 1.5em;
+            color: #4b6cb7;
+        }
+
+        /* Contact Section */
+        #contact {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
         form {
             display: flex;
             flex-direction: column;
             gap: 1em;
-            width: 400px;
+            width: 100%;
+            max-width: 400px;
             margin: 2em auto;
             padding: 1.5em;
             border: 1px solid #ddd;
@@ -148,13 +204,32 @@
             background: #182848;
         }
 
+        .social-links {
+            margin-top: 1em;
+            display: flex;
+            gap: 1em;
+        }
+
+        .social-links a {
+            display: inline-block;
+        }
+
+        .social-links img {
+            width: 40px;
+            height: 40px;
+            transition: transform 0.3s ease;
+        }
+
+        .social-links img:hover {
+            transform: scale(1.2);
+        }
+
         /* Footer */
         footer {
             background: #182848;
             color: white;
             text-align: center;
-            padding: 1em 0;
-            margin-top: 2em;
+            padding: 2em 0;
         }
 
         footer p {
@@ -162,12 +237,13 @@
             font-size: 1em;
         }
 
-        /* About Section Image */
-        #about img {
-            width: 100%;
-            max-width: 600px;
-            margin-top: 2em;
-            border-radius: 8px;
+        footer a {
+            color: #4b6cb7;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
         }
 
         /* Responsive Design */
@@ -192,7 +268,7 @@
 </head>
 <body>
     <header>
-        <h1>My Personal Website</h1>
+        <h1>Kamal's Portfolio</h1>
         <div class="hamburger" onclick="toggleMenu()">
             <div></div>
             <div></div>
@@ -200,28 +276,74 @@
         </div>
         <nav>
             <ul id="menu">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="https://www.chakras.info/" target="_blank">Chakras Info</a></li>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li>
+                    <a href="#home">
+                        <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Home Icon">
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="#about">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="About Icon">
+                        About
+                    </a>
+                </li>
+                <li>
+                    <a href="#portfolio">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3176/3176363.png" alt="Portfolio Icon">
+                        Portfolio
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.chakras.info/" target="_blank">
+                        <img src="https://cdn-icons-png.flaticon.com/512/1997/1997928.png" alt="Chakras Icon">
+                        Chakras Info
+                    </a>
+                </li>
+                <li>
+                    <a href="login.html">
+                        <img src="https://cdn-icons-png.flaticon.com/512/1077/1077063.png" alt="Login Icon">
+                        Login
+                    </a>
+                </li>
+                <li>
+                    <a href="#contact">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2343/2343697.png" alt="Contact Icon">
+                        Contact
+                    </a>
+                </li>
             </ul>
         </nav>
     </header>
     <main>
         <section id="home" class="section">
-            <h2>Welcome</h2>
-            <p>A place where you can learn more about me and my work.</p>
+            <h2>Welcome to My World</h2>
+            <p>Hi, I'm Kamal, a passionate web developer and designer. I create beautiful, functional, and user-friendly websites that make an impact. With a love for coding and design, I strive to deliver solutions that are both innovative and practical.</p>
         </section>
         <section id="about" class="section">
             <h2>About Me</h2>
-            <p>Hello! I'm kamal, a [Your Profession/Field]. I love creating meaningful projects and making an impact with my work.</p>
-            <img src="kamal.jpg" alt="About Me Image">
+            <p>I'm a self-taught developer with over 5 years of experience in web development. My expertise includes HTML, CSS, JavaScript, and modern frameworks like React and Vue.js. I also have a strong interest in UI/UX design, ensuring that every project I work on is not only functional but also visually appealing. When I'm not coding, I enjoy exploring nature, practicing yoga, and learning about mindfulness.</p>
+            <img src="https://via.placeholder.com/300" alt="Kamal's Photo">
         </section>
         <section id="portfolio" class="section">
             <h2>My Portfolio</h2>
-            <p>Here are some of my recent works and projects that showcase my skills and expertise.</p>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <img src="https://via.placeholder.com/300" alt="Project 1">
+                    <h3>Project 1</h3>
+                    <p>A responsive website for a local business.</p>
+                </div>
+                <div class="portfolio-item">
+                    <img src="https://via.placeholder.com/300" alt="Project 2">
+                    <h3>Project 2</h3>
+                    <p>An e-commerce platform with a modern design.</p>
+                </div>
+                <div class="portfolio-item">
+                    <img src="https://via.placeholder.com/300" alt="Project 3">
+                    <h3>Project 3</h3>
+                    <p>A blog platform for writers and creators.</p>
+                </div>
+            </div>
         </section>
         <section id="contact" class="section">
             <h2>Contact Me</h2>
@@ -231,10 +353,18 @@
                 <textarea rows="5" placeholder="Your Message" required></textarea>
                 <button type="submit">Send Message</button>
             </form>
+            <div class="social-links">
+                <a href="https://www.facebook.com/share/19pt1ev1GZ/" target="_blank">
+                    <img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="Facebook">
+                </a>
+                <a href="https://www.tiktok.com/@fantasy_visions?_t=ZS-8tUPqAOAiKQ&_r=1" target="_blank">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3046/3046126.png" alt="TikTok">
+                </a>
+            </div>
         </section>
     </main>
     <footer>
-        <p>© 2025 Your Name. All rights reserved.</p>
+        <p>© 2025 Kamal. All rights reserved. | <a href="#home">Back to Top</a></p>
     </footer>
 
     <script>
@@ -244,4 +374,4 @@
         }
     </script>
 </body>
-  </html>
+    </html>
